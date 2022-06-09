@@ -20,7 +20,7 @@ We double the size of HumanML3D dataset by mirroring all motions and properly re
 
 [KIT Motion-Language Dataset](https://motion-annotation.humanoids.kit.edu/dataset/) (KIT-ML) is also a related dataset that contains 3,911 motions and 6,278 descriptions. We processed KIT-ML dataset following the same procedures of HumanML3D dataset, and provide the access in this repository. However, if you would like to use KIT-ML dataset, please remember to cite the original paper.
 
-## Download Data
+## How to Obtain the Data
 An example is provided in this repository (./HumanML3D).
 
 Download [HumanML3D](https://drive.google.com/drive/folders/1e437ofkMW_C6KnP2ef7JY_UuX7XN9_zZ?usp=sharing) dataset.
