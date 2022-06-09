@@ -1,0 +1,4 @@
+This folder holds SMPLH gender specifi models with extended shape parameters (16 instead of original 10 parameters).
+The head vertices are also locked to remove the hair bun in the original traning dataset of SMPL.
+This model is initiall intended to be used in project AMASS: https://amass.is.tue.mpg.de
+

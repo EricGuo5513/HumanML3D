@@ -1,0 +1,29 @@
+Please read carefully the following terms and conditions and any accompanying documentation before you download and/or use the SMPL body model and software, (the "Model"), including 3D meshes, blend weights blend shapes, textures, software, scripts, and animations. By downloading and/or using the Model, you acknowledge that you have read these terms and conditions, understand them, and agree to be bound by them. If you do not agree with these terms and conditions, you must not download and/or use the Model.
+
+Ownership
+The Model has been developed at the Max Planck Institute for Intelligent Systems (hereinafter "MPI") and is owned by and proprietary material of the Max-Planck-Gesellschaft zur Förderung der Wissenschaften e.V. (hereinafter “MPG”; MPI and MPG hereinafter collectively “Max-Planck”).
+
+License Grant
+Max-Planck grants you a non-exclusive, non-transferable, free of charge right:
+
+To download the Model and use it on computers owned, leased or otherwise controlled by you and/or your organisation;
+To use the Model for the sole purpose of performing non-commercial scientific research, non-commercial education, or non-commercial artistic projects.
+Any other use, in particular any use for commercial purposes, is prohibited. This includes, without limitation, incorporation in a commercial product, use in a commercial service, as training data for a commercial product, for commercial ergonomic analysis (e.g. product design, architectural design, etc.), or production of other artifacts for commercial purposes including, for example, web services, movies, television programs, mobile applications, or video games. The Model may not be used for pornographic purposes or to generate pornographic material whether commercial or not. This license also prohibits the use of the Model to train methods/algorithms/neural networks/etc. for commercial use of any kind. The Model may not be reproduced, modified and/or made available in any form to any third party without Max-Planck’s prior written permission. By downloading the Model, you agree not to reverse engineer it.
+
+Disclaimer of Representations and Warranties
+You expressly acknowledge and agree that the Model results from basic research, is provided “AS IS”, may contain errors, and that any use of the Model is at your sole risk. MAX-PLANCK MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND CONCERNING THE MODEL, NEITHER EXPRESS NOR IMPLIED, AND THE ABSENCE OF ANY LEGAL OR ACTUAL DEFECTS, WHETHER DISCOVERABLE OR NOT. Specifically, and not to limit the foregoing, Max-Planck makes no representations or warranties (i) regarding the merchantability or fitness for a particular purpose of the Model, (ii) that the use of the Model will not infringe any patents, copyrights or other intellectual property rights of a third party, and (iii) that the use of the Model will not cause any damage of any kind to you or a third party.
+
+Limitation of Liability
+Under no circumstances shall Max-Planck be liable for any incidental, special, indirect or consequential damages arising out of or relating to this license, including but not limited to, any lost profits, business interruption, loss of programs or other data, or all other commercial damages or losses, even if advised of the possibility thereof.
+
+No Maintenance Services
+You understand and agree that Max-Planck is under no obligation to provide either maintenance services, update services, notices of latent defects, or corrections of defects with regard to the Model. Max-Planck nevertheless reserves the right to update, modify, or discontinue the Model at any time.
+
+Publication with SMPL
+You agree to cite the most recent paper describing the model as specified on the download website. This website lists the most up to date bibliographic information on the about page.
+
+Media projects with SMPL
+When using SMPL in a media project please give credit to Max Planck Institute for Intelligent Systems. For example: SMPL was used for character animation courtesy of the Max Planck Institute for Intelligent Systems.
+Commercial licensing opportunities
+For commercial use in the fields of medicine, psychology, and biomechanics, please contact ps-license@tue.mpg.de.
+For commercial use in all other fields please contact Body Labs Inc at smpl@bodylabs.com
