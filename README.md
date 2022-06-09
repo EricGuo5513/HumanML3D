@@ -6,39 +6,68 @@ HumanML3D is a 3D human motion-language dataset that originates from a combinati
 <div  align="center">    
   <img src="./dataset_showcase.png"  height = "500" alt="teaser_image" align=center />
 </div>
------
+
+
 ### Statistics
 Each motion clip in HumanML3D comes with 3-4 single sentence descriptions annotated on Amazon Mechanical Turk. Motions are downsampled into 20 fps, with each clip lasting from 2 to 10 seconds. 
 
 Overall, HumanML3D dataset consists of **14,616** motions and **44,970** descriptions composed by **5,371** distinct words. The total length of motions amounts to **28.59** hours. The average motion length is **7.1** seconds, while average description length is **12** words.
 
------
+
 ### Data augmentation
 
 We double the size of HumanML3D dataset by mirroring all motions and properly replacing certain keywords in the descriptions (e.g., 'left'->'right', 'clockwise'->'counterclockwise'). 
 
------
+
 ### KIT-ML Dataset
 
 [KIT Motion-Language Dataset](https://motion-annotation.humanoids.kit.edu/dataset/) (KIT-ML) is also a related dataset that contains 3,911 motions and 6,278 descriptions. We processed KIT-ML dataset following the same procedures of HumanML3D dataset, and provide the access in this repository. However, if you would like to use KIT-ML dataset, please remember to cite the original paper.
 
+
 ## How to Obtain the Data
-Due to the distribution policy of AMASS dataset, we are not allowed to distribute the data directly. We provide a series of script that could reproduce our HumanML3D dataset from AMASS dataset.
+For KIT-ML dataset, you could directly download [[Here]](https://drive.google.com/drive/folders/1MnixfyGfujSP-4t8w_2QvjtTVpEKr97t?usp=sharing). Due to the distribution policy of AMASS dataset, we are not allowed to distribute the data directly. We provide a series of script that could reproduce our HumanML3D dataset from AMASS dataset. 
 
-You need to clone this repository and install the virtual environment。
+You need to clone this repository and install the virtual environment.
 
-----
+
 ### Python Virtual Environment
 ```sh
 conda create -f environment.yaml
 source activate torch-action2pose
 ```
 
-Download [HumanML3D](https://drive.google.com/drive/folders/1e437ofkMW_C6KnP2ef7JY_UuX7XN9_zZ?usp=sharing) dataset.
+In the case of installation failure, you could alternatively install the following:
+```sh
+- Python==3.7.10
+- Numpy          
+- Scipy          
+- PyTorch        
+- Tqdm 
+- Pandas
+- Matplotlib==3.3.4     // Only for animation
+- ffmpeg==4.3.1  // Only for animation
+- Spacy==2.3.4   // Only for text process
+```
 
-Download [KIT-ML](https://drive.google.com/drive/folders/1MnixfyGfujSP-4t8w_2QvjtTVpEKr97t?usp=sharing) dataset.
+<!-- Download [HumanML3D](https://drive.google.com/drive/folders/1e437ofkMW_C6KnP2ef7JY_UuX7XN9_zZ?usp=sharing) dataset. -->
 
-### Data Structure
+
+### Extract and Process Data
+
+You need to run the following scripts in order to obtain HumanML3D dataset:
+
+1. raw_pose_processing.ipynb
+2. motion_representation.ipynb
+3. cal_mean_variance.ipynb
+
+This could be optional.
+4. animation.ipynb
+
+Please remember to go through the double-check steps. These aim to check if you are on the right track of obtaining HumanML3D dataset.
+
+After all, the data under folder "./HumanML3D" is what you finally need.
+
+## Data Structure
 ```sh
 <DATA-DIR>
 ./animations.rar        //Animations of all motion clips in mp4 format.
@@ -68,33 +97,9 @@ with each line a distint textual annotation, composed of four parts: *original d
 
 Since some motions are too complicated to be described, we allow the annotators to describe a sub-part of a given motion if required. In these cases, *start time(s)* and *end time(s)* denotes the motion segments that are annotated. Nonetheless, we observe these only occupy a small proportion of HumanML3D. *start time(s)* and *end time(s)* are set to 0 by default, which means the text is captioning the entire sequence of corresponding motion. 
 
-## Library Requirements
-- Python 3
-- Numpy          // For motion process and animation
-- Scipy          // For motion process
-- PyTorch        // For motion process and animation
-- Tqdm           // For motion process
-- Matplotlib     // For animation
-- ffmpeg==4.3.1  // For animation
-- Spacy==2.3.4   // For text process
-
-## Process Data
-
-```sh
-<!--Pre-processing motions, extracting rotation invariant features and rotation features-->
-./motion_process.py
-<!--Pre-processing texts-->
-./text_process.py
-<!--Obtaining the mean and variance of motion data, for the purpose of normalization-->
-./cal_mean_variance.py
-```
-
-## Animate Data
-Recover 3d human motions from rotation features or rotation invariant features, and animate them in 3D.
-```sh
-./plot_script.py
-```
 If you are not able to install ffmpeg, you could animate videos in '.gif' instead of '.mp4'. However, generating GIFs usually takes longer time and memory occupation.
+
+## Citation
 
 If you are using KIT-ML dataset, please consider citing the following paper:
 ```
@@ -115,21 +120,12 @@ If you are using KIT-ML dataset, please consider citing the following paper:
 
 If you are using HumanML3D dataset, please consider citing the following papers:
 ```
-@inproceedings{mahmood2019amass,
-  title={AMASS: Archive of motion capture as surface shapes},
-  author={Mahmood, Naureen and Ghorbani, Nima and Troje, Nikolaus F and Pons-Moll, Gerard and Black, Michael J},
-  booktitle={Proceedings of the IEEE/CVF international conference on computer vision},
-  pages={5442--5451},
-  year={2019}
-}
-```
-
-```
-@inproceedings{guo2020action2motion,
-  title={Action2motion: Conditioned generation of 3d human motions},
-  author={Guo, Chuan and Zuo, Xinxin and Wang, Sen and Zou, Shihao and Sun, Qingyao and Deng, Annan and Gong, Minglun and Cheng, Li},
-  booktitle={Proceedings of the 28th ACM International Conference on Multimedia},
-  pages={2021--2029},
-  year={2020}
+@InProceedings{Guo_2022_CVPR,
+    author    = {Guo, Chuan and Zou, Shihao and Zuo, Xinxin and Wang, Sen and Ji, Wei and Li, Xingyu and Cheng, Li},
+    title     = {Generating Diverse and Natural 3D Human Motions From Text},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2022},
+    pages     = {5152-5161}
 }
 ```
