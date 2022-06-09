@@ -130,3 +130,6 @@ If you are using HumanML3D dataset, please consider citing the following papers:
     pages     = {5152-5161}
 }
 ```
+
+### Misc
+ Contact Chuan Guo at cguo2@ualberta.ca for any questions or comments.
