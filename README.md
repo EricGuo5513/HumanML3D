@@ -60,7 +60,8 @@ You need to run the following scripts in order to obtain HumanML3D dataset:
 2. motion_representation.ipynb
 3. cal_mean_variance.ipynb
 
-This could be optional. Run it if you need animations.    
+This could be optional. Run it if you need animations. 
+
 4. animation.ipynb
 
 Please remember to go through the double-check steps. These aim to check if you are on the right track of obtaining HumanML3D dataset.
@@ -82,7 +83,7 @@ After all, the data under folder "./HumanML3D" is what you finally need.
 ./train_val.txt         //List of names of training and validation data
 ./val.txt               //List of names of validation data
 ```
-HumanML3D data follows the SMPL skeleton structure with 22 joints. KIT-MLh have 21 skeletal joints. Refer to paraUtils for detailed kinematic chains.
+HumanML3D data follows the SMPL skeleton structure with 22 joints. KIT-ML has 21 skeletal joints. Refer to paraUtils for detailed kinematic chains.
 
 The file named in "MXXXXXX.\*" (e.g., 'M000000.npy') is mirrored from file with correspinding name "XXXXXX.\*" (e.g., '000000.npy'). Text files and motion files follow the same naming protocols, meaning texts in "./texts/XXXXXX.txt"(e.g., '000000.txt') exactly describe the human motions in "./new_joints(or new_joint_vecs)/XXXXXX.npy" (e.g., '000000.npy')
 
