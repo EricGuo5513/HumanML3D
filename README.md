@@ -33,7 +33,7 @@ You need to clone this repository and install the virtual environment.
 ### Python Virtual Environment
 ```sh
 conda create -f environment.yaml
-source activate torch-action2pose
+source activate torch_render
 ```
 
 In the case of installation failure, you could alternatively install the following:
