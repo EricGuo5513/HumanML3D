@@ -60,7 +60,7 @@ You need to run the following scripts in order to obtain HumanML3D dataset:
 2. motion_representation.ipynb
 3. cal_mean_variance.ipynb
 
-This could be optional.
+This could be optional. Run it if you need animations.    
 4. animation.ipynb
 
 Please remember to go through the double-check steps. These aim to check if you are on the right track of obtaining HumanML3D dataset.
