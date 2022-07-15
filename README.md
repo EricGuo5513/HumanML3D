@@ -82,6 +82,7 @@ After all, the data under folder "./HumanML3D" is what you finally need.
 ./test.txt              //List of names of testing data
 ./train_val.txt         //List of names of training and validation data
 ./val.txt               //List of names of validation data
+./all.txt               //List of names of validation data
 ```
 HumanML3D data follows the SMPL skeleton structure with 22 joints. KIT-ML has 21 skeletal joints. Refer to paraUtils for detailed kinematic chains.
 
