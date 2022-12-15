@@ -29,6 +29,10 @@ For KIT-ML dataset, you could directly download [[Here]](https://drive.google.co
 
 You need to clone this repository and install the virtual environment.
 
+<!-- ### [2021/01/12] Updates: add evaluation related files & scripts   -->
+
+### [2022/12/15] Update: Installing matplotlib=3.3.4 could prevent small deviation of the generated data from reference data. See [Issue](https://github.com/EricGuo5513/HumanML3D/issues/21#issue-1498109924)
+
 
 ### Python Virtual Environment
 ```sh
