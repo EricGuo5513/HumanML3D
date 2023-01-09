@@ -36,7 +36,7 @@ You need to clone this repository and install the virtual environment.
 
 ### Python Virtual Environment
 ```sh
-conda create -f environment.yaml
+conda env create -f environment.yaml
 conda activate torch_render
 ```
 
