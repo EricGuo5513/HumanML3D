@@ -55,6 +55,9 @@ In the case of installation failure, you could alternatively install the followi
 
 <!-- Download [HumanML3D](https://drive.google.com/drive/folders/1e437ofkMW_C6KnP2ef7JY_UuX7XN9_zZ?usp=sharing) dataset. -->
 
+### Download SMPL+H and DMPL model
+
+Download SMPL+H mode from [SMPL+H](https://mano.is.tue.mpg.de/download.php) (choose Extended SMPL+H model used in AMASS project) and DMPL model from [DMPL](https://smpl.is.tue.mpg.de/download.php) (choose DMPLs compatible with SMPL). Then place all the models under "./body_model/".
 
 ### Extract and Process Data
 
