@@ -15,7 +15,7 @@ setup(
     package_dir={"": "src"},
     packages=find_packages(where="src"),
     python_requires=">=3.7",
-    install_requires=["numpy"],
+    install_requires=["numpy", "torch>=2.0.0", "einops"],
     extras_require={
         "test": ["pytest"],
         "dev": ["black", "flake8", "bumpver"],
