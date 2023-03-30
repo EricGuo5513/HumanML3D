@@ -194,8 +194,8 @@ if __name__ == "__main__":
     smpl_root = "/data/humanml3d/body_models"
     save_root = "/data/humanml3d/pose_data"
 
-    # extract_files(data_dir, amass_root, smpl_root, workers=0)
+    extract_files(data_dir, amass_root, smpl_root, workers=0)
 
-    # process_raw(amass_root, smpl_root, save_root)
+    process_raw(amass_root, smpl_root, save_root)
 
     segment_mirror_and_relocate(save_root, "index.csv", "/data/humanml3d/joints")
