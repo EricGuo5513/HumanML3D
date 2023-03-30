@@ -3,9 +3,12 @@ import os.path as osp
 
 import multiprocessing as mp
 
+import zipfile
 import tarfile
 
-zip_files = [
+from .path import add_root
+
+tar_files = [
     "ACCAD.tar.bz2",
     "BMLhandball.tar.bz2",
     "BMLmovi.tar.bz2",
@@ -25,6 +28,8 @@ zip_files = [
     "TotalCapture.tar.bz2",
     "Transitions.tar.bz2",
 ]
+
+zip_files = ["humanact12.zip"]
 
 
 def find_missing(paths_to_search):
@@ -80,10 +85,6 @@ def normalize(paths):
     return [osp.normpath(path) for path in paths]
 
 
-def add_root(root, paths):
-    return [osp.join(root, path) for path in paths]
-
-
 def extracted(path, dst):
     file_paths = read_manifest(path, dst)
     if file_paths is None:
@@ -108,12 +109,23 @@ def extract_tar(path, dst, ext):
 
 
 def extract_zip_files(src, dst, workers=None):
-    zip_paths = [osp.join(src, file) for file in zip_files]
+    zip_paths = add_root(src, zip_files)
     missing_paths = find_missing(zip_paths)
     raise_missing_error(missing_paths)
 
+    for path in zip_paths:
+        if not extracted(path, dst):
+            with zipfile.ZipFile(path) as f:
+                f.extractall(dst)
+
+        save_manifest(path, dst)
+
+    tar_paths = add_root(src, tar_files)
+    missing_paths = find_missing(tar_paths)
+    raise_missing_error(missing_paths)
+
     args = []
-    for file_name in zip_files:
+    for file_name in tar_files:
         path = osp.join(src, file_name)
         arg = (path, dst, "bz2")
         args.append(arg)
