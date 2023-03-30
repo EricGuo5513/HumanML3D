@@ -1,5 +1,6 @@
 import os
 import os.path as osp
+import multiprocessing as mp
 
 from tqdm import tqdm
 
@@ -171,7 +172,8 @@ def segment_mirror_and_relocate(save_root, index_path="index.csv", save_dir="joi
     total_amount = index_file.shape[0]
     fps = 20
 
-    for i in tqdm(range(total_amount)):
+    args = []
+    for i in range(total_amount):
         source_path = index_file.loc[i]["source_path"]
         source_path = osp.normpath(source_path)
         source_path = source_path.replace("pose_data", save_root)
@@ -180,7 +182,10 @@ def segment_mirror_and_relocate(save_root, index_path="index.csv", save_dir="joi
         start_frame = index_file.loc[i]["start_frame"]
         end_frame = index_file.loc[i]["end_frame"]
 
-        save_raw(source_path, new_name, start_frame, end_frame, fps, save_dir)
+        args.append((source_path, new_name, start_frame, end_frame, fps, save_dir))
+
+    with mp.Pool() as p:
+        p.starmap(save_raw, args)
 
 
 if __name__ == "__main__":
