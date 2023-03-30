@@ -11,7 +11,7 @@ from einops import rearrange, repeat
 import pandas as pd
 
 from humanml3d.body_models import BodyModel
-from humanml3d.utils import extract_smpl_files, extract_zip_files, add_root
+from humanml3d.utils import extract_smpl_files, extract_zip_files
 
 comp_device = torch.device("cuda:0") if torch.cuda.is_available() else "cpu"
 
