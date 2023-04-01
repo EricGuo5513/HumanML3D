@@ -3,6 +3,8 @@ from os.path import join as pjoin
 
 import numpy as np
 
+from tqdm import tqdm
+
 
 # root_rot_velocity (B, seq_len, 1)
 # root_linear_velocity (B, seq_len, 2)
@@ -13,34 +15,45 @@ import numpy as np
 # foot contact (B, seq_len, 4)
 def mean_variance(data_dir, joints_num):
     file_list = os.listdir(data_dir)
-    data_list = []
 
-    for file in file_list:
+    data_list = []
+    for file in tqdm(file_list):
         data = np.load(pjoin(data_dir, file))
         if np.isnan(data).any():
             print(file)
             continue
+
         data_list.append(data)
 
-    data = np.concatenate(data_list, axis=0)
-    print(data.shape)
-    Mean = data.mean(axis=0)
-    Std = data.std(axis=0)
-    Std[0:1] = Std[0:1].mean() / 1.0
-    Std[1:3] = Std[1:3].mean() / 1.0
-    Std[3:4] = Std[3:4].mean() / 1.0
-    Std[4 : 4 + (joints_num - 1) * 3] = Std[4 : 4 + (joints_num - 1) * 3].mean() / 1.0
-    Std[4 + (joints_num - 1) * 3 : 4 + (joints_num - 1) * 9] = (
-        Std[4 + (joints_num - 1) * 3 : 4 + (joints_num - 1) * 9].mean() / 1.0
+    n = 0
+    mean = 0
+    for data in data_list:
+        for i in range(data.shape[0]):
+            mean += data[i]
+            n += 1
+    mean /= n
+
+    variance = 0
+    for data in data_list:
+        for i in range(data.shape[0]):
+            variance += (data[i] - mean) ** 2
+    std = np.sqrt(variance / n)
+
+    std[0:1] = std[0:1].mean() / 1.0
+    std[1:3] = std[1:3].mean() / 1.0
+    std[3:4] = std[3:4].mean() / 1.0
+    std[4 : 4 + (joints_num - 1) * 3] = std[4 : 4 + (joints_num - 1) * 3].mean() / 1.0
+    std[4 + (joints_num - 1) * 3 : 4 + (joints_num - 1) * 9] = (
+        std[4 + (joints_num - 1) * 3 : 4 + (joints_num - 1) * 9].mean() / 1.0
     )
-    Std[4 + (joints_num - 1) * 9 : 4 + (joints_num - 1) * 9 + joints_num * 3] = (
-        Std[4 + (joints_num - 1) * 9 : 4 + (joints_num - 1) * 9 + joints_num * 3].mean()
+    std[4 + (joints_num - 1) * 9 : 4 + (joints_num - 1) * 9 + joints_num * 3] = (
+        std[4 + (joints_num - 1) * 9 : 4 + (joints_num - 1) * 9 + joints_num * 3].mean()
         / 1.0
     )
-    Std[4 + (joints_num - 1) * 9 + joints_num * 3 :] = (
-        Std[4 + (joints_num - 1) * 9 + joints_num * 3 :].mean() / 1.0
+    std[4 + (joints_num - 1) * 9 + joints_num * 3 :] = (
+        std[4 + (joints_num - 1) * 9 + joints_num * 3 :].mean() / 1.0
     )
 
-    assert 8 + (joints_num - 1) * 9 + joints_num * 3 == Std.shape[-1]
+    assert 8 + (joints_num - 1) * 9 + joints_num * 3 == std.shape[-1]
 
-    return Mean, Std
+    return mean, std

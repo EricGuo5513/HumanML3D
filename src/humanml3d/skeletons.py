@@ -1,14 +1,17 @@
 import numpy as np
 import torch
 
+import copy
+
 from .quaternions import (
     qbetween_np,
-    qmul_np,
     qinv_np,
     qrot,
     qrot_np,
     cont6d_to_matrix_np,
     cont6d_to_matrix,
+    qmul,
+    qmul_np,
 )
 import scipy.ndimage.filters as filters
 
@@ -22,6 +25,20 @@ class Skeleton(object):
         self._offset = None
         self._parents = [0] * len(self._raw_offset)
         self._parents[0] = -1
+        for chain in self._kinematic_tree:
+            for j in range(1, len(chain)):
+                self._parents[chain[j]] = chain[j - 1]
+
+    def copy(self):
+        skel_copy = copy.deepcopy(self)
+        skel_copy.reset()
+        return skel_copy
+
+    def reset(self):
+        self._offset = None
+        self._parents = [0] * len(self._raw_offset)
+        self._parents[0] = -1
+
         for chain in self._kinematic_tree:
             for j in range(1, len(chain)):
                 self._parents[chain[j]] = chain[j - 1]
@@ -334,4 +351,4 @@ def skeleton_factory(skeleton_type, device):
         raise ValueError
 
     raw_offsets = torch.from_numpy(raw_offsets)
-    return Skeleton(raw_offsets, kinematic_chain, device)
+    return raw_offsets, kinematic_chain

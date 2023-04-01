@@ -11,7 +11,7 @@ from einops import rearrange, repeat
 import pandas as pd
 
 from humanml3d.body_models import BodyModel
-from humanml3d.utils import extract_smpl_files, extract_zip_files
+from humanml3d.utils import extract_smpl, extract_amass, extract_humanact12
 
 
 def amass_to_pose(src_path, save_path, male_bm, female_bm, ex_fps=20, device="cpu"):
@@ -74,12 +74,13 @@ def amass_to_pose(src_path, save_path, male_bm, female_bm, ex_fps=20, device="cp
     return fps
 
 
-def extract_files(data_dir, amass_root, smpl_root, workers=None):
+def extract_files(data_dir, amass_root, smpl_root, pose_dir, workers=None):
     for root in [amass_root, smpl_root]:
         os.makedirs(root, exist_ok=True)
 
-    extract_smpl_files(data_dir, smpl_root, workers)
-    extract_zip_files(data_dir, amass_root, workers)
+    extract_humanact12(data_dir, pose_dir)
+    extract_smpl(data_dir, smpl_root, workers)
+    extract_amass(data_dir, amass_root, workers)
 
 
 def process_raw(amass_root, smpl_root, save_root, ex_fps, device):

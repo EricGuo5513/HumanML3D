@@ -12,6 +12,7 @@ from humanml3d.quaternions import (
     quaternion_to_cont6d,
     quaternion_to_cont6d_np,
 )
+from .skeletons import Skeleton
 
 
 # Lower legs
@@ -24,8 +25,9 @@ face_joint_indx = [2, 1, 17, 16]
 r_hip, l_hip = 2, 1
 
 
-def uniform_skeleton(src_skel, positions, target_offset):
-    src_offset = src_skel.get_offsets_joints(torch.from_numpy(positions[0]))
+def uniform_skeleton(n_raw_offsets, kinematic_chain, positions, target_offset):
+    skel = Skeleton(n_raw_offsets, kinematic_chain, "cpu")
+    src_offset = skel.get_offsets_joints(torch.from_numpy(positions[0]))
     src_offset = src_offset.numpy()
     tgt_offset = target_offset.numpy()
     # print(src_offset)
@@ -40,22 +42,22 @@ def uniform_skeleton(src_skel, positions, target_offset):
     tgt_root_pos = src_root_pos * scale_rt
 
     """Inverse Kinematics"""
-    quat_params = src_skel.inverse_kinematics_np(positions, face_joint_indx)
+    quat_params = skel.inverse_kinematics_np(positions, face_joint_indx)
     # print(quat_params.shape)
 
     """Forward Kinematics"""
-    src_skel.set_offset(target_offset)
-    new_joints = src_skel.forward_kinematics_np(quat_params, tgt_root_pos)
+    skel.set_offset(target_offset)
+    new_joints = skel.forward_kinematics_np(quat_params, tgt_root_pos)
     return new_joints
 
 
-def process_file(src_skel, positions, feet_thre, tgt_offsets):
+def process_file(n_raw_offsets, kinematic_chain, positions, feet_thre, tgt_offsets):
     # (seq_len, joints_num, 3)
     #     '''Down Sample'''
     #     positions = positions[::ds_num]
 
     """Uniform Skeleton"""
-    positions = uniform_skeleton(src_skel, positions, tgt_offsets)
+    positions = uniform_skeleton(n_raw_offsets, kinematic_chain, positions, tgt_offsets)
 
     """Put on Floor"""
     floor_height = positions.min(axis=0).min(axis=0)[1]
@@ -147,8 +149,9 @@ def process_file(src_skel, positions, feet_thre, tgt_offsets):
         return positions
 
     def get_quaternion(positions):
+        skel = Skeleton(n_raw_offsets, kinematic_chain, "cpu")
         # (seq_len, joints_num, 4)
-        quat_params = src_skel.inverse_kinematics_np(
+        quat_params = skel.inverse_kinematics_np(
             positions, face_joint_indx, smooth_forward=False
         )
 
@@ -170,8 +173,11 @@ def process_file(src_skel, positions, feet_thre, tgt_offsets):
         return quat_params, r_velocity, velocity, r_rot
 
     def get_cont6d_params(positions):
+        skel = Skeleton(n_raw_offsets, kinematic_chain, "cpu")
+
+        skel = skel.copy()
         # (seq_len, joints_num, 4)
-        quat_params = src_skel.inverse_kinematics_np(
+        quat_params = skel.inverse_kinematics_np(
             positions, face_joint_indx, smooth_forward=True
         )
 

@@ -108,7 +108,7 @@ def extract_tar(path, dst, ext):
         save_manifest(path, dst)
 
 
-def extract_zip_files(src, dst, workers=None):
+def extract_humanact12(src, dst):
     zip_paths = add_root(src, zip_files)
     missing_paths = find_missing(zip_paths)
     raise_missing_error(missing_paths)
@@ -120,6 +120,8 @@ def extract_zip_files(src, dst, workers=None):
 
         save_manifest(path, dst)
 
+
+def extract_amass(src, dst, workers=None):
     tar_paths = add_root(src, tar_files)
     missing_paths = find_missing(tar_paths)
     raise_missing_error(missing_paths)
@@ -141,7 +143,7 @@ def extract_zip_files(src, dst, workers=None):
 smpl_files = ["smplh.tar.xz", "dmpls.tar.xz"]
 
 
-def extract_smpl_files(src, dst, workers=None):
+def extract_smpl(src, dst, workers=None):
     smpl_paths = [osp.join(src, file) for file in smpl_files]
     missing_paths = find_missing(smpl_paths)
     raise_missing_error(missing_paths)
