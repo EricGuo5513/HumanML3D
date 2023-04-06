@@ -39,8 +39,12 @@ def extract(ctx, workers):
 
 @cli.command()
 @click.option("--fps", default=20)
+@click.option("--target_id", default="default")
+@click.option("--dataset", default="humanml3d")
+@click.option("--enable_cuda", is_flag=True)
 @click.pass_context
-def smpl_to_pos(ctx, fps):
+def preprocess(ctx, fps, target_id, dataset, enable_cuda):
+    src = ctx.obj["SRC"]
     dst = ctx.obj["DST"]
 
     device = torch.device("cuda:0") if torch.cuda.is_available() else "cpu"
@@ -50,27 +54,11 @@ def smpl_to_pos(ctx, fps):
     )
     humanml3d.process_raw(amass_dir, smpl_dir, save_root, fps, device)
 
-
-@cli.command()
-@click.pass_context
-def augment(ctx):
-    src = ctx.obj["SRC"]
-    dst = ctx.obj["DST"]
-
     index_path = osp.join(src, "index.csv")
 
     pose_dir, joints_dir = add_root(dst, ["pose_data", "joints"])
 
     humanml3d.segment_mirror_and_relocate(pose_dir, index_path, joints_dir)
-
-
-@cli.command()
-@click.option("--target_id", default="default")
-@click.option("--dataset", default="humanml3d")
-@click.option("--enable_cuda", is_flag=True)
-@click.pass_context
-def pos_to_humanml3d(ctx, target_id, dataset, enable_cuda):
-    dst = ctx.obj["DST"]
 
     if target_id == "default":
         if dataset.lower() == "kit":
@@ -80,14 +68,13 @@ def pos_to_humanml3d(ctx, target_id, dataset, enable_cuda):
         else:
             raise ValueError
 
-    joints_num = 22
     # ds_num = 8
-    data_dir, save_dir1, save_dir2 = add_root(
+    data_dir, joint_dir, joint_vec_dir = add_root(
         dst, ["joints", "new_joints", "new_joint_vecs"]
     )
 
-    os.makedirs(save_dir1, exist_ok=True)
-    os.makedirs(save_dir2, exist_ok=True)
+    os.makedirs(joint_dir, exist_ok=True)
+    os.makedirs(joint_vec_dir, exist_ok=True)
 
     device = (
         torch.device("cuda:0") if torch.cuda.is_available() and enable_cuda else "cpu"
@@ -117,43 +104,41 @@ def pos_to_humanml3d(ctx, target_id, dataset, enable_cuda):
             torch.from_numpy(data).unsqueeze(0).float().to(device),
             skeleton.njoints(),
         )
-        np.save(osp.join(save_dir1, source_file), rec_ric_data.squeeze().cpu().numpy())
-        np.save(osp.join(save_dir2, source_file), data)
+        np.save(osp.join(joint_dir, source_file), rec_ric_data.squeeze().cpu().numpy())
+        np.save(osp.join(joint_vec_dir, source_file), data)
         frame_num += data.shape[0]
 
-    click.echo(
-        "Total clips: %d, Frames: %d, Duration: %fm"
-        % (len(source_list), frame_num, frame_num / 20 / 60)
-    )
-
-
-@cli.command()
-@click.option("--num_joints", default=22)
-@click.pass_context
-def verify(ctx, num_joints):
     src = ctx.obj["SRC"]
     dst = ctx.obj["DST"]
 
-    save_dir1, save_dir2 = add_root(dst, ["new_joints", "new_joint_vecs"])
+    joint_path, joint_vec_path = add_root(dst, ["new_joints", "new_joint_vecs"])
 
     # The given data is used to double check if you are on the right track.
-    reference1 = np.load(osp.join(src, "new_joints/012314.npy"))
-    reference2 = np.load(osp.join(src, "new_joint_vecs/012314.npy"))
+    ref_joint = np.load(osp.join(src, "new_joints/012314.npy"))
+    ref_joint_vec = np.load(osp.join(src, "new_joint_vecs/012314.npy"))
 
-    reference1_1 = np.load(osp.join(save_dir1, "012314.npy"))
-    reference2_1 = np.load(osp.join(save_dir2, "012314.npy"))
+    joint = np.load(osp.join(joint_path, "012314.npy"))
+    joint_vec = np.load(osp.join(joint_vec_path, "012314.npy"))
 
-    click.echo(abs(reference1 - reference1_1).sum())
-    click.echo(abs(reference2 - reference2_1).sum())
+    click.echo(abs(ref_joint - joint).sum())
+    click.echo(abs(ref_joint_vec - joint_vec).sum())
 
-    mean, std = humanml3d.mean_variance(save_dir2, num_joints)
+    if dataset.lower() == "humanml3d":
+        num_joints = 22
+    else:
+        raise NotImplementedError
 
-    reference1, reference2 = add_root(src, ["Mean.npy", "Std.npy"])
-    reference1 = np.load(reference1)
-    reference2 = np.load(reference2)
+    mean, std = humanml3d.mean_variance(joint_vec_path, num_joints)
+    mean_path, std_path = add_root(dst, ["Mean.npy", "Std.npy"])
+    np.save(mean_path, mean)
+    np.save(std_path, std)
 
-    click.echo(np.abs(mean - reference1).sum())
-    click.echo(np.abs(std - reference2).sum())
+    ref_mean_path, ref_std_path = add_root(src, ["Mean.npy", "Std.npy"])
+    ref_mean = np.load(ref_mean_path)
+    ref_std = np.load(ref_std_path)
+
+    click.echo(np.abs(mean - ref_mean).sum())
+    click.echo(np.abs(std - ref_std).sum())
 
 
 if __name__ == "__main__":
