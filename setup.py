@@ -6,7 +6,7 @@ this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 setup(
-    name="humanml3d",
+    name="humanml3d-utils",
     version="0.0.0",
     description="HumanML3D preprocessing and visualization",
     long_description=long_description,
