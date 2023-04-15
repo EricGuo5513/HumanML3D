@@ -78,7 +78,7 @@ class Skeleton(object):
         # print(joints.shape[:-1])
         quat_params = np.zeros(joints.shape[:-1] + (4,))
         # print(quat_params.shape)
-#         root_quat[0] = np.array([[1.0, 0.0, 0.0, 0.0]])
+        root_quat[0] = np.array([[1.0, 0.0, 0.0, 0.0]])
         quat_params[:, 0] = root_quat
         # quat_params[0, 0] = np.array([[1.0, 0.0, 0.0, 0.0]])
         for chain in self._kinematic_tree:
