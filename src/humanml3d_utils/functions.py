@@ -61,22 +61,29 @@ def extract_smpl_files(smpl_dir: Path, dst: Path):
 def extract_amass_files(amass_dir: Path, dst: Path):
     amass_paths = [amass_dir / file for file in amass_files]
 
+    all_paths = []
     with mp.Pool() as p:
         for paths in p.imap_unordered(
             functools.partial(extract_tar_files, dst=dst, suffix=".npz"), amass_paths
         ):
-            yield from paths
+            for path in paths:
+                all_paths.append(path)
+
+    return all_paths
 
 
 def load_humanact12(path: Path, dst: Path):
+    array_path_pairs = []
     for path in extract(path, dst):
         if path.suffix == ".npy":
-            yield np.load(path), path
+            array_path_pairs.append((np.load(path), path))
+    return array_path_pairs
 
 
 def to_positions(
     paths: Iterable[Tuple[BinaryIO, Path]], body_model: AMASSBodyModel, device
 ):
+    array_path_pairs = []
     for path in paths:
         bdata = np.load(path, allow_pickle=True)
 
@@ -102,7 +109,9 @@ def to_positions(
         with torch.inference_mode():
             pose_seq = body_model(trans, gender, fps, poses, betas).cpu().numpy()
 
-        yield pose_seq, path.with_suffix(".npy")
+        array_path_pairs.append((pose_seq, path.with_suffix(".npy")))
+
+    return array_path_pairs
 
 
 def format_poses(
