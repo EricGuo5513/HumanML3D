@@ -1,2 +1,2 @@
 from .amass_body_model import *
-from .io import *
+from .files import *

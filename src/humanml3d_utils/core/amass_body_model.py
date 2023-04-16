@@ -22,14 +22,18 @@ class AMASSBodyModel(nn.Module):
 
     def __init__(
         self,
-        male_bm_path: Path,
-        female_bm_path: Path,
-        male_dmpl_path: Path,
-        female_dmpl_path: Path,
+        smpl_path: Path,
+        dmpl_path: Path,
         num_betas: int = 10,
         num_dmpls: int = 8,
     ) -> None:
         super().__init__()
+
+        male_bm_path = smpl_path / "male/model.npz"
+        female_bm_path = smpl_path / "female/model.npz"
+
+        male_dmpl_path = dmpl_path / "male/model.npz"
+        female_dmpl_path = dmpl_path / "female/model.npz"
 
         self.male_bm = BodyModel(
             bm_fname=str(male_bm_path),

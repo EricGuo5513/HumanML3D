@@ -1,63 +1,82 @@
-from typing import Tuple, Iterable
+from typing import Tuple, Iterable, BinaryIO
+
 from pathlib import Path
 import multiprocessing as mp
-import itertools
 import functools
+
+import tarfile
 
 import pandas as pd
 import numpy as np
 import torch
 
-from .core import io
+from .core import extract
 from .core.raw_pose_processing import swap_left_right
 from .core.motion_representation import process_file
 from .core.amass_body_model import AMASSBodyModel
 from .core.skeletons import Skeleton, skeleton_factory
 
+amass_files = [
+    "ACCAD.tar.bz2",
+    "BMLhandball.tar.bz2",
+    "BMLmovi.tar.bz2",
+    "BMLrub.tar.bz2",
+    "CMU.tar.bz2",
+    "DFaust.tar.bz2",
+    "EKUT.tar.bz2",
+    "EyesJapanDataset.tar.bz2",
+    "HDM05.tar.bz2",
+    "HumanEva.tar.bz2",
+    "KIT.tar.bz2",
+    "MoSh.tar.bz2",
+    "PosePrior.tar.bz2",
+    "SFU.tar.bz2",
+    "SSM.tar.bz2",
+    "TCDHands.tar.bz2",
+    "TotalCapture.tar.bz2",
+    "Transitions.tar.bz2",
+]
 
-def extract_amass_files(smpl_dir: Path, dst: Path):
-    with mp.Pool() as p:
-        for paths in p.imap_unordered(
-            functools.partial(io.extract_tar, dst=dst),
-            [smpl_dir / name for name in io.amass_files],
-        ):
-            for path in paths:
-                if path.suffix == ".npz":
-                    yield path
+humanact_file = "humanact12.zip"
+
+smpl_files = {"smpl": "smplh.tar.xz", "dmpl": "dmpls.tar.xz"}
+
+
+def extract_tar_files(tar_path: Path, dst: Path, suffix: str):
+    paths = []
+    for path in extract(tar_path, dst):
+        if path.suffix == suffix:
+            paths.append(path)
+    return paths
 
 
 def extract_smpl_files(smpl_dir: Path, dst: Path):
+    for file in ["smplh.tar.xz", "dmpls.tar.xz"]:
+        with tarfile.open(smpl_dir / file, "r:xz") as tar:
+            path = dst / file.split(".")[0]
+            tar.extractall(path)
+        yield path
+
+
+def extract_amass_files(amass_dir: Path, dst: Path):
+    amass_paths = [amass_dir / file for file in amass_files]
+
     with mp.Pool() as p:
-        smpl_paths, dmpl_paths = list(
-            p.starmap(
-                io.extract_tar,
-                (
-                    (smpl_dir / f"{name}.tar.xz", dst / name)
-                    for name in ("smplh", "dmpls")
-                ),
-            )
-        )
-
-    for path in itertools.chain(smpl_paths, dmpl_paths):
-        if "smplh/male" in str(path):
-            male_bm_path = path
-        if "smplh/female" in str(path):
-            female_bm_path = path
-        if "dmpls/male" in str(path):
-            male_dmpl_path = path
-        if "dmpls/female" in str(path):
-            female_dmpl_path = path
-
-    return male_bm_path, female_bm_path, male_dmpl_path, female_dmpl_path
+        for paths in p.imap_unordered(
+            functools.partial(extract_tar_files, dst=dst, suffix=".npz"), amass_paths
+        ):
+            yield from paths
 
 
-def extract_humanact12(path: Path, dst: Path):
-    for path in io.extract_zip(path, dst):
+def load_humanact12(path: Path, dst: Path):
+    for path in extract(path, dst):
         if path.suffix == ".npy":
             yield np.load(path), path
 
 
-def positions(paths: Iterable[Path], body_model: AMASSBodyModel, device):
+def to_positions(
+    paths: Iterable[Tuple[BinaryIO, Path]], body_model: AMASSBodyModel, device
+):
     for path in paths:
         bdata = np.load(path, allow_pickle=True)
 
@@ -86,7 +105,7 @@ def positions(paths: Iterable[Path], body_model: AMASSBodyModel, device):
         yield pose_seq, path.with_suffix(".npy")
 
 
-def format(
+def format_poses(
     array_path_pairs: Iterable[Tuple[np.ndarray, Path]],
     root: Path,
     index_path: Path,
