@@ -425,3 +425,92 @@ def lerp(p0, p1, t):
     t = t.view(new_view_t).expand(new_shape)
 
     return p0 + t * (p1 - p0)
+
+def mat_to_quat(R) -> torch.Tensor:
+    '''
+    https://github.com/duolu/pyrotation/blob/master/pyrotation/pyrotation.py
+    Convert a rotation matrix to a unit quaternion.
+    This uses the Shepperd’s method for numerical stability.
+    '''
+
+    # The rotation matrix must be orthonormal
+
+    w2 = (1 + R[..., 0, 0] + R[..., 1, 1] + R[..., 2, 2])
+    x2 = (1 + R[..., 0, 0] - R[..., 1, 1] - R[..., 2, 2])
+    y2 = (1 - R[..., 0, 0] + R[..., 1, 1] - R[..., 2, 2])
+    z2 = (1 - R[..., 0, 0] - R[..., 1, 1] + R[..., 2, 2])
+
+    yz = (R[..., 1, 2] + R[..., 2, 1])
+    xz = (R[..., 2, 0] + R[..., 0, 2])
+    xy = (R[..., 0, 1] + R[..., 1, 0])
+
+    wx = (R[..., 2, 1] - R[..., 1, 2])
+    wy = (R[..., 0, 2] - R[..., 2, 0])
+    wz = (R[..., 1, 0] - R[..., 0, 1])
+
+    w = torch.empty_like(x2)
+    x = torch.empty_like(x2)
+    y = torch.empty_like(x2)
+    z = torch.empty_like(x2)
+
+    flagA = (R[..., 2, 2] < 0) * (R[..., 0, 0] > R[..., 1, 1])
+    flagB = (R[..., 2, 2] < 0) * (R[..., 0, 0] <= R[..., 1, 1])
+    flagC = (R[..., 2, 2] >= 0) * (R[..., 0, 0] < -R[..., 1, 1])
+    flagD = (R[..., 2, 2] >= 0) * (R[..., 0, 0] >= -R[..., 1, 1])
+
+    x[flagA] = torch.sqrt(x2[flagA])
+    w[flagA] = wx[flagA] / x[flagA]
+    y[flagA] = xy[flagA] / x[flagA]
+    z[flagA] = xz[flagA] / x[flagA]
+
+    y[flagB] = torch.sqrt(y2[flagB])
+    w[flagB] = wy[flagB] / y[flagB]
+    x[flagB] = xy[flagB] / y[flagB]
+    z[flagB] = yz[flagB] / y[flagB]
+
+    z[flagC] = torch.sqrt(z2[flagC])
+    w[flagC] = wz[flagC] / z[flagC]
+    x[flagC] = xz[flagC] / z[flagC]
+    y[flagC] = yz[flagC] / z[flagC]
+
+    w[flagD] = torch.sqrt(w2[flagD])
+    x[flagD] = wx[flagD] / w[flagD]
+    y[flagD] = wy[flagD] / w[flagD]
+    z[flagD] = wz[flagD] / w[flagD]
+
+    # if R[..., 2, 2] < 0:
+    #
+    #     if R[..., 0, 0] > R[..., 1, 1]:
+    #
+    #         x = torch.sqrt(x2)
+    #         w = wx / x
+    #         y = xy / x
+    #         z = xz / x
+    #
+    #     else:
+    #
+    #         y = torch.sqrt(y2)
+    #         w = wy / y
+    #         x = xy / y
+    #         z = yz / y
+    #
+    # else:
+    #
+    #     if R[..., 0, 0] < -R[..., 1, 1]:
+    #
+    #         z = torch.sqrt(z2)
+    #         w = wz / z
+    #         x = xz / z
+    #         y = yz / z
+    #
+    #     else:
+    #
+    #         w = torch.sqrt(w2)
+    #         x = wx / w
+    #         y = wy / w
+    #         z = wz / w
+
+    res = [w, x, y, z]
+    res = [z.unsqueeze(-1) for z in res]
+
+    return torch.cat(res, dim=-1) / 2
