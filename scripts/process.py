@@ -1,145 +1,89 @@
 import os
-import os.path as osp
 
-import click
-from tqdm import tqdm
+import zipfile
+
+from jsonargparse import CLI
 
 import numpy as np
 import torch
 
-import humanml3d
-from humanml3d.skeletons import Skeleton, skeleton_factory
-from humanml3d.utils import add_root
-import humanml3d.motion_representation as mr_utils
+from pathlib import Path
+import humanml3d_utils
+from humanml3d_utils.core import AMASSBodyModel
 
 
-@click.group()
-@click.option("--src", default=".")
-@click.option("--dst", default=".")
-@click.pass_context
-def cli(ctx, src, dst):
-    ctx.ensure_object(dict)
+def process(data_dir: Path, motion_dir: Path, text_dir: Path):
+    extract_dir = data_dir / "raw"
 
-    ctx.obj["SRC"] = src
-    ctx.obj["DST"] = dst
+    smpl_path, dmpl_path = humanml3d_utils.extract_smpl_files(data_dir, extract_dir)
 
+    device = torch.device("cuda") if torch.cuda.is_available() else "cpu"
 
-@cli.command()
-@click.option("--workers", default=0)
-@click.pass_context
-def extract(ctx, workers):
-    src = ctx.obj["SRC"]
-    dst = ctx.obj["DST"]
+    body_model = AMASSBodyModel(smpl_path, dmpl_path).to(device)
 
-    amass_dir, smpl_dir, pose_dir = add_root(
-        dst, ["amass_root", "body_models", "pose_data"]
-    )
-    humanml3d.extract_files(src, amass_dir, smpl_dir, pose_dir, workers)
-
-
-@cli.command()
-@click.option("--fps", default=20)
-@click.option("--target_id", default="default")
-@click.option("--dataset", default="humanml3d")
-@click.option("--enable_cuda", is_flag=True)
-@click.pass_context
-def preprocess(ctx, fps, target_id, dataset, enable_cuda):
-    src = ctx.obj["SRC"]
-    dst = ctx.obj["DST"]
-
-    device = torch.device("cuda:0") if torch.cuda.is_available() else "cpu"
-
-    amass_dir, smpl_dir, save_root = add_root(
-        dst, ["amass_root", "body_models", "pose_data"]
-    )
-    humanml3d.process_raw(amass_dir, smpl_dir, save_root, fps, device)
-
-    index_path = osp.join(src, "index.csv")
-
-    pose_dir, joints_dir = add_root(dst, ["pose_data", "joints"])
-
-    humanml3d.segment_mirror_and_relocate(pose_dir, index_path, joints_dir)
-
-    if target_id == "default":
-        if dataset.lower() == "kit":
-            target_id = "03950"
-        elif dataset.lower() == "humanml3d":
-            target_id = "000021"
-        else:
-            raise ValueError
-
-    # ds_num = 8
-    data_dir, joint_dir, joint_vec_dir = add_root(
-        dst, ["joints", "new_joints", "new_joint_vecs"]
+    amass_paths = humanml3d_utils.extract_amass_files(data_dir, extract_dir)
+    humanact_paths = humanml3d_utils.load_humanact12(
+        data_dir / "humanact12.zip", extract_dir
     )
 
-    os.makedirs(joint_dir, exist_ok=True)
-    os.makedirs(joint_vec_dir, exist_ok=True)
-
-    device = (
-        torch.device("cuda:0") if torch.cuda.is_available() and enable_cuda else "cpu"
+    positions = humanml3d_utils.to_positions(
+        amass_paths,
+        body_model,
+        device,
     )
-    raw_offsets, kinematic_chain = skeleton_factory(dataset, device)
-    skeleton = Skeleton(raw_offsets, kinematic_chain, "cpu")
+    positions.extend(humanact_paths)
 
-    target_skeleton = np.load(osp.join(data_dir, target_id + ".npy"))
-    target_skeleton = target_skeleton.reshape(len(target_skeleton), -1, 3)
-    target_skeleton = torch.from_numpy(target_skeleton).to(device)
-
-    target_offsets = skeleton.get_offsets_joints(target_skeleton[0])
-
-    source_list = os.listdir(data_dir)
-    frame_num = 0
-    for source_file in tqdm(source_list):
-        source_data = np.load(osp.join(data_dir, source_file))[:, : skeleton.njoints()]
-
-        if source_data.shape[0] == 1:
-            print(source_file)
-            continue
-
-        data, ground_positions, positions, l_velocity = mr_utils.process_file(
-            raw_offsets, kinematic_chain, source_data, 0.002, target_offsets
+    pose_representation = humanml3d_utils.motion_representation(
+        humanml3d_utils.flip_left_right(
+            humanml3d_utils.format_poses(
+                positions, root=extract_dir, index_path=data_dir / "index.csv", fps=20
+            )
         )
-        rec_ric_data = mr_utils.recover_from_ric(
-            torch.from_numpy(data).unsqueeze(0).float().to(device),
-            skeleton.njoints(),
-        )
-        np.save(osp.join(joint_dir, source_file), rec_ric_data.squeeze().cpu().numpy())
-        np.save(osp.join(joint_vec_dir, source_file), data)
-        frame_num += data.shape[0]
+    )
 
-    src = ctx.obj["SRC"]
-    dst = ctx.obj["DST"]
+    for array, path in pose_representation:
+        path = motion_dir / path.name
+        os.makedirs(path.parent, exist_ok=True)
+        np.save(path, array)
 
-    joint_path, joint_vec_path = add_root(dst, ["new_joints", "new_joint_vecs"])
+    with zipfile.ZipFile(data_dir / "texts.zip") as f:
+        f.extractall(text_dir)
 
-    # The given data is used to double check if you are on the right track.
-    ref_joint = np.load(osp.join(src, "new_joints/012314.npy"))
-    ref_joint_vec = np.load(osp.join(src, "new_joint_vecs/012314.npy"))
 
-    joint = np.load(osp.join(joint_path, "012314.npy"))
-    joint_vec = np.load(osp.join(joint_vec_path, "012314.npy"))
+def validate(motion_dir: Path, text_dir: Path, split_path: Path):
+    path = motion_dir / "012314.npy"
+    representation = np.load(path)
+    ((joints, _),) = humanml3d_utils.recover_from_representation(
+        [
+            (representation, path),
+        ]
+    )
 
-    click.echo(abs(ref_joint - joint).sum())
-    click.echo(abs(ref_joint_vec - joint_vec).sum())
+    sample_representation = np.load("samples/new_joint_vecs/012314.npy")
+    sample_joints = np.load("samples/new_joints/012314.npy")
 
-    if dataset.lower() == "humanml3d":
-        num_joints = 22
-    else:
-        raise NotImplementedError
+    diff = abs(representation - sample_representation).sum()
+    assert diff < 0.02, diff
+    diff = abs(joints - sample_joints).sum()
+    assert diff < 0.02, diff
 
-    mean, std = humanml3d.mean_variance(joint_vec_path, num_joints)
-    mean_path, std_path = add_root(dst, ["Mean.npy", "Std.npy"])
-    np.save(mean_path, mean)
-    np.save(std_path, std)
+    paths = humanml3d_utils.load_splits(split_path, motion_dir, text_dir)
 
-    ref_mean_path, ref_std_path = add_root(src, ["Mean.npy", "Std.npy"])
-    ref_mean = np.load(ref_mean_path)
-    ref_std = np.load(ref_std_path)
+    motions = []
+    for motion_path, text_path in paths:
+        array = np.load(motion_path)
+        motions.append(array)
 
-    click.echo(np.abs(mean - ref_mean).sum())
-    click.echo(np.abs(std - ref_std).sum())
+    mean, std = humanml3d_utils.compute_stats(motions, num_joints=22)
+
+    sample_mean = np.load("samples/Mean.npy")
+    diff = abs(mean - sample_mean).sum()
+    assert diff < 1, diff
+
+    sample_std = np.load("samples/Std.npy")
+    diff = abs(std - sample_std).sum()
+    assert diff < 1, diff
 
 
 if __name__ == "__main__":
-    cli()
+    CLI()
