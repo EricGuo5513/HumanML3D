@@ -426,7 +426,7 @@ def lerp(p0, p1, t):
 
     return p0 + t * (p1 - p0)
 
-def mat_to_quat(R) -> torch.Tensor:
+def matrix_to_quat(R) -> torch.Tensor:
     '''
     https://github.com/duolu/pyrotation/blob/master/pyrotation/pyrotation.py
     Convert a rotation matrix to a unit quaternion.
@@ -514,3 +514,6 @@ def mat_to_quat(R) -> torch.Tensor:
     res = [z.unsqueeze(-1) for z in res]
 
     return torch.cat(res, dim=-1) / 2
+
+def cont6d_to_quat(cont6d):
+    return matrix_to_quat(cont6d_to_matrix(cont6d))
