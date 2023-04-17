@@ -12,7 +12,7 @@ import torch
 
 from .core import extract
 from .core.raw_pose_processing import swap_left_right
-from .core.motion_representation import process_file
+from .core.motion_representation import process_file, recover_from_ric
 from .core.amass_body_model import AMASSBodyModel
 from .core.skeletons import Skeleton, skeleton_factory
 
@@ -201,6 +201,15 @@ def motion_representation(
         yield data, path
 
 
+def recover_from_representation(array_path_pairs: Iterable[Tuple[np.ndarray, Path]]):
+    for array, path in array_path_pairs:
+        array = recover_from_ric(
+            torch.from_numpy(array).unsqueeze(0).float(), joints_num=22
+        )
+
+        yield array, path
+
+
 def load_splits(splits_path: Path, joint_dir: Path, text_dir: Path):
     with open(splits_path) as f:
         splits = f.read().splitlines()
@@ -208,3 +217,36 @@ def load_splits(splits_path: Path, joint_dir: Path, text_dir: Path):
         joint_path = joint_dir / f"{name}.npy"
         text_path = text_dir / f"{name}.txt"
         yield joint_path, text_path
+
+
+def compute_stats(motions, num_joints):
+    count = 0
+    mean = 0
+    for array in motions:
+        count += array.shape[0]
+        mean += array.sum(0)
+    mean /= count
+
+    variance = 0
+    for array in motions:
+        variance += ((array - mean) ** 2).sum(0)
+    std = np.sqrt(variance / count)
+
+    std[0:1] = std[0:1].mean() / 1.0
+    std[1:3] = std[1:3].mean() / 1.0
+    std[3:4] = std[3:4].mean() / 1.0
+    std[4 : 4 + (num_joints - 1) * 3] = std[4 : 4 + (num_joints - 1) * 3].mean() / 1.0
+    std[4 + (num_joints - 1) * 3 : 4 + (num_joints - 1) * 9] = (
+        std[4 + (num_joints - 1) * 3 : 4 + (num_joints - 1) * 9].mean() / 1.0
+    )
+    std[4 + (num_joints - 1) * 9 : 4 + (num_joints - 1) * 9 + num_joints * 3] = (
+        std[4 + (num_joints - 1) * 9 : 4 + (num_joints - 1) * 9 + num_joints * 3].mean()
+        / 1.0
+    )
+    std[4 + (num_joints - 1) * 9 + num_joints * 3 :] = (
+        std[4 + (num_joints - 1) * 9 + num_joints * 3 :].mean() / 1.0
+    )
+
+    assert 8 + (num_joints - 1) * 9 + num_joints * 3 == std.shape[-1]
+
+    return mean, std

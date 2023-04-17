@@ -8,5 +8,7 @@ from .functions import (
     format_poses,
     flip_left_right,
     motion_representation,
+    recover_from_representation,
     load_splits,
+    compute_stats,
 )
