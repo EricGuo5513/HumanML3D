@@ -73,7 +73,7 @@ def qrot(q, v):
     return (v + 2 * (q[:, :1] * uv + uuv)).view(original_shape)
 
 
-def qeuler(q, order, epsilon=0, deg=True):
+def qeuler(q, order, epsilon=0, deg=True, follow_order=True):
     """
     Convert quaternion(s) q to Euler angles.
     Expects a tensor of shape (*, 4), where * denotes any number of dimensions.
@@ -116,7 +116,9 @@ def qeuler(q, order, epsilon=0, deg=True):
         z = torch.atan2(2 * (q0 * q3 + q1 * q2), 1 - 2 * (q2 * q2 + q3 * q3))
     else:
         raise
+    resdict = {"x":x, "y":y, "z":z}
 
+    # print(order)
     reslist = [resdict[order[i]] for i in range(len(order))] if follow_order else [x, y, z]
     # print(reslist)
     if deg:
