@@ -117,10 +117,12 @@ def qeuler(q, order, epsilon=0, deg=True):
     else:
         raise
 
+    reslist = [resdict[order[i]] for i in range(len(order))] if follow_order else [x, y, z]
+    # print(reslist)
     if deg:
-        return torch.stack((x, y, z), dim=1).view(original_shape) * 180 / np.pi
+        return torch.stack(reslist, dim=1).view(original_shape) * 180 / np.pi
     else:
-        return torch.stack((x, y, z), dim=1).view(original_shape)
+        return torch.stack(reslist, dim=1).view(original_shape)
 
 
 # Numpy-backed implementations
