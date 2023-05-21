@@ -16,6 +16,10 @@ from .core.motion_representation import process_file, recover_from_ric
 from .core.amass_body_model import AMASSBodyModel
 from .core.skeletons import Skeleton, skeleton_factory
 
+import os
+
+torch.set_num_threads(os.cpu_count())
+
 amass_files = [
     "ACCAD.tar.bz2",
     "BMLhandball.tar.bz2",
