@@ -28,7 +28,7 @@ We double the size of HumanML3D dataset by mirroring all motions and properly re
 
 
 ## Checkout Our Works on HumanML3D
-:ok_woman: [T2M](https://ericguo5513.github.io/) - The first work on HumanML3D that learns to generate 3D motion from textual descriptions, with *temporal VAE*.  
+:ok_woman: [T2M](https://ericguo5513.github.io/text-to-motion) - The first work on HumanML3D that learns to generate 3D motion from textual descriptions, with *temporal VAE*.  
 :running: [TM2T](https://ericguo5513.github.io/TM2T) - Learns the mutual mapping between texts and motions through the discrete motion token.  
 :dancer: [TM2D](https://garfield-kh.github.io/TM2D/) - Generates dance motions with text instruction.  
 :honeybee: [MoMask](https://ericguo5513.github.io/momask/) - New-level text2motion generation using residual VQ and generative masked modeling.
