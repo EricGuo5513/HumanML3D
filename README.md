@@ -3,7 +3,7 @@
 HumanML3D is a 3D human motion-language dataset that originates from a combination of [HumanAct12](https://github.com/EricGuo5513/action-to-motion) and [Amass](https://github.com/EricGuo5513/action-to-motion) dataset. It covers a broad range of human actions such as daily activities (e.g., 'walking', 'jumping'), sports (e.g., 'swimming', 'playing golf'), acrobatics (e.g., 'cartwheel') and artistry (e.g., 'dancing'). 
 
 <div  align="center">    
-  <img src="./dataset_showcase.png"  height = "600" alt="teaser_image" align=center />
+  <img src="./dataset_showcase.png"  height = "500" alt="teaser_image" align=center />
 </div>
 
 <br>
