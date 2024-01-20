@@ -26,7 +26,7 @@ We double the size of HumanML3D dataset by mirroring all motions and properly re
 [KIT Motion-Language Dataset](https://motion-annotation.humanoids.kit.edu/dataset/) (KIT-ML) is also a related dataset that contains 3,911 motions and 6,278 descriptions. We processed KIT-ML dataset following the same procedures of HumanML3D dataset, and provide the access in this repository. However, if you would like to use KIT-ML dataset, please remember to cite the original paper.
 </details>
 
-
+If this dataset is usefule in your projects, we will apprecite your star on this codebase. 😆😆
 ## Checkout Our Works on HumanML3D
 :ok_woman: [T2M](https://ericguo5513.github.io/text-to-motion) - The first work on HumanML3D that learns to generate 3D motion from textual descriptions, with *temporal VAE*.  
 :running: [TM2T](https://ericguo5513.github.io/TM2T) - Learns the mutual mapping between texts and motions through the discrete motion token.  
