@@ -72,7 +72,7 @@ Download SMPL+H mode from [SMPL+H](https://mano.is.tue.mpg.de/download.php) (cho
 
 You need to run the following scripts in order to obtain HumanML3D dataset:
 
-1. raw_pose_processing.ipynb
+1. raw_pose_processing.ipynb (this might take several days and can be accelerated with a GPU)
 2. motion_representation.ipynb
 3. cal_mean_variance.ipynb
 
