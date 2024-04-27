@@ -150,3 +150,7 @@ If you are using HumanML3D dataset, please consider citing the following papers:
 
 ### Misc
  Contact Chuan Guo at cguo2@ualberta.ca for any questions or comments.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=EricGuo5513/HumanML3D&type=Date)](https://star-history.com/#EricGuo5513/HumanML3D&Date)
