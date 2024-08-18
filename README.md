@@ -34,7 +34,7 @@ If this dataset is usefule in your projects, we will apprecite your star on this
 :honeybee: [MoMask](https://ericguo5513.github.io/momask/) - New-level text2motion generation using residual VQ and generative masked modeling.
 
 ## How to Obtain the Data
-For KIT-ML dataset, you could directly download [[Here]](https://drive.google.com/drive/folders/1MnixfyGfujSP-4t8w_2QvjtTVpEKr97t?usp=sharing). Due to the distribution policy of AMASS dataset, we are not allowed to distribute the data directly. We provide a series of script that could reproduce our HumanML3D dataset from AMASS dataset. 
+For KIT-ML dataset, you could directly download [[Here]](https://drive.google.com/drive/folders/1D3bf2G2o4Hv-Ale26YW18r1Wrh7oIAwK?usp=sharing). Due to the distribution policy of AMASS dataset, we are not allowed to distribute the data directly. We provide a series of script that could reproduce our HumanML3D dataset from AMASS dataset. 
 
 You need to clone this repository and install the virtual environment.
 
@@ -62,7 +62,7 @@ In the case of installation failure, you could alternatively install the followi
 - Spacy==2.3.4   // Only for text process
 ```
 
-<!-- Download [HumanML3D](https://drive.google.com/drive/folders/1e437ofkMW_C6KnP2ef7JY_UuX7XN9_zZ?usp=sharing) dataset. -->
+<!-- Download [HumanML3D](https://drive.google.com/drive/folders/1OZrTlAGRvLjXhXwnRiOC-oxYry1vf-Uu?usp=sharing) dataset. -->
 
 ### Download SMPL+H and DMPL model
 
