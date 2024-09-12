@@ -1,0 +1,19 @@
+# vim swaps
+.*.sw?
+
+# python binaries
+*.py[oc]
+
+# numpy arrays
+*.np[yz]
+
+# HumanML3D texts, when unzipped
+HumanML3D/texts/*.txt
+
+# zip files
+*.zip
+*.bz2
+*.tar
+*.gz
+*.tar.gz
+*.tgz
