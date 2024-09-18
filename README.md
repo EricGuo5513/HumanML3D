@@ -26,15 +26,16 @@ We double the size of HumanML3D dataset by mirroring all motions and properly re
 [KIT Motion-Language Dataset](https://motion-annotation.humanoids.kit.edu/dataset/) (KIT-ML) is also a related dataset that contains 3,911 motions and 6,278 descriptions. We processed KIT-ML dataset following the same procedures of HumanML3D dataset, and provide the access in this repository. However, if you would like to use KIT-ML dataset, please remember to cite the original paper.
 </details>
 
-If this dataset is usefule in your projects, we will apprecite your star on this codebase. 😆😆
-## Checkout Our Works on HumanML3D
+If this dataset is useful in your projects, we will appreciate your star on this codebase. 😆😆
+
+## Checkout Our Work on HumanML3D
 :ok_woman: [T2M](https://ericguo5513.github.io/text-to-motion) - The first work on HumanML3D that learns to generate 3D motion from textual descriptions, with *temporal VAE*.  
 :running: [TM2T](https://ericguo5513.github.io/TM2T) - Learns the mutual mapping between texts and motions through the discrete motion token.  
 :dancer: [TM2D](https://garfield-kh.github.io/TM2D/) - Generates dance motions with text instruction.  
 :honeybee: [MoMask](https://ericguo5513.github.io/momask/) - New-level text2motion generation using residual VQ and generative masked modeling.
 
 ## How to Obtain the Data
-For KIT-ML dataset, you could directly download [[Here]](https://drive.google.com/drive/folders/1D3bf2G2o4Hv-Ale26YW18r1Wrh7oIAwK?usp=sharing). Due to the distribution policy of AMASS dataset, we are not allowed to distribute the data directly. We provide a series of script that could reproduce our HumanML3D dataset from AMASS dataset. 
+For KIT-ML dataset, you could directly download [[Here]](https://drive.google.com/drive/folders/1D3bf2G2o4Hv-Ale26YW18r1Wrh7oIAwK?usp=sharing). Due to the distribution policy of AMASS dataset, we are not allowed to distribute the data directly. We provide a series of scripts that could reproduce our HumanML3D dataset from AMASS dataset.
 
 You need to clone this repository and install the virtual environment.
 
@@ -102,7 +103,7 @@ After all, the data under folder "./HumanML3D" is what you finally need.
 ```
 HumanML3D data follows the SMPL skeleton structure with 22 joints. KIT-ML has 21 skeletal joints. Refer to paraUtils for detailed kinematic chains.
 
-The file named in "MXXXXXX.\*" (e.g., 'M000000.npy') is mirrored from file with correspinding name "XXXXXX.\*" (e.g., '000000.npy'). Text files and motion files follow the same naming protocols, meaning texts in "./texts/XXXXXX.txt"(e.g., '000000.txt') exactly describe the human motions in "./new_joints(or new_joint_vecs)/XXXXXX.npy" (e.g., '000000.npy')
+The file named in "MXXXXXX.\*" (e.g., 'M000000.npy') is mirrored from file with corresponding name "XXXXXX.\*" (e.g., '000000.npy'). Text files and motion files follow the same naming protocols, meaning texts in "./texts/XXXXXX.txt"(e.g., '000000.txt') exactly describe the human motions in "./new_joints(or new_joint_vecs)/XXXXXX.npy" (e.g., '000000.npy')
 
 Each text file looks like the following:
 ```sh
@@ -111,11 +112,11 @@ the standing person kicks with their left foot before going back to their origin
 a man kicks with something or someone with his left leg.#a/DET man/NOUN kick/VERB with/ADP something/PRON or/CCONJ someone/PRON with/ADP his/DET left/ADJ leg/NOUN#0.0#0.0
 he is flying kick with his left leg#he/PRON is/AUX fly/VERB kick/NOUN with/ADP his/DET left/ADJ leg/NOUN#0.0#0.0
 ```
-with each line a distint textual annotation, composed of four parts: *original description (lower case)*, *processed sentence*, *start time(s)*, *end time(s)*, that are seperated by *#*.
+with each line a distinct textual annotation, composed of four parts: *original description (lower case)*, *processed sentence*, *start time(s)*, *end time(s)*, that are separated by *#*.
 
 Since some motions are too complicated to be described, we allow the annotators to describe a sub-part of a given motion if required. In these cases, *start time(s)* and *end time(s)* denotes the motion segments that are annotated. Nonetheless, we observe these only occupy a small proportion of HumanML3D. *start time(s)* and *end time(s)* are set to 0 by default, which means the text is captioning the entire sequence of corresponding motion. 
 
-If you are not able to install ffmpeg, you could animate videos in '.gif' instead of '.mp4'. However, generating GIFs usually takes longer time and memory occupation.
+If you are not able to install ffmpeg, you could animate videos in '.gif' instead of '.mp4'. However, generating GIFs usually takes longer time and uses more memory.
 
 ## Citation
 
