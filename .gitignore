@@ -17,3 +17,6 @@ HumanML3D/texts/*.txt
 *.gz
 *.tar.gz
 *.tgz
+
+# animations
+*.mp4
