@@ -178,41 +178,24 @@ def euler2quat(e, order, deg=True):
 
     original_shape = list(e.shape)
     original_shape[-1] = 4
-
     e = e.view(-1, 3)
 
-    ## if euler angles in degrees
     if deg:
         e = e * np.pi / 180.
 
-    x = e[:, 0]
-    y = e[:, 1]
-    z = e[:, 2]
+    x = e[:, order.index('x')]
+    y = e[:, order.index('y')]
+    z = e[:, order.index('z')]
 
     rx = torch.stack((torch.cos(x / 2), torch.sin(x / 2), torch.zeros_like(x), torch.zeros_like(x)), dim=1)
     ry = torch.stack((torch.cos(y / 2), torch.zeros_like(y), torch.sin(y / 2), torch.zeros_like(y)), dim=1)
     rz = torch.stack((torch.cos(z / 2), torch.zeros_like(z), torch.zeros_like(z), torch.sin(z / 2)), dim=1)
 
-    result = None
-    for coord in order:
-        if coord == 'x':
-            r = rx
-        elif coord == 'y':
-            r = ry
-        elif coord == 'z':
-            r = rz
-        else:
-            raise
-        if result is None:
-            result = r
-        else:
-            result = qmul(result, r)
+    q0 = eval('r'+order[0])
+    q1 = eval('r'+order[1])
+    q2 = eval('r'+order[2])
 
-    # Reverse antipodal representation to have a non-negative "w"
-    if order in ['xyz', 'yzx', 'zxy']:
-        result *= -1
-
-    return result.view(original_shape)
+    return qmul(q0, qmul(q1, q2)).view(original_shape)
 
 
 def expmap_to_quaternion(e):
