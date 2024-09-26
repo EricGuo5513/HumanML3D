@@ -1,0 +1,640 @@
+        then  13887 
+     forward  10126 
+        back   5337 
+      around   2022 
+      slowly   1960 
+        down   1624 
+          up   1586 
+   backwards   1527 
+       again   1261 
+    slightly   1155 
+       still   830  
+    straight   733  
+       forth   713  
+     quickly   677  
+    together   614  
+       right   549  
+       twice   490  
+    forwards   481  
+         out   463  
+    backward   355  
+        very   336  
+  diagonally   303  
+        away   278  
+        once   270  
+       where   245  
+    sideways   219  
+       first   216  
+   carefully   196  
+       apart   188  
+  repeatedly   174  
+    casually   152  
+        fast   150  
+        left   136  
+        over   131  
+       there   121  
+     upwards   115  
+     finally   102  
+      almost    97  
+      gently    96  
+     outward    95  
+        just    89  
+      upward    81  
+       ahead    79  
+     lightly    79  
+     briskly    75  
+    suddenly    75  
+        more    74  
+          in    69  
+        high    69  
+        only    67  
+     briefly    64  
+        when    61  
+    directly    58  
+    normally    57  
+      behind    56  
+     upright    55  
+    downward    54  
+          so    53  
+        else    52  
+    upstairs    52  
+          as    51  
+        wide    51  
+     loosely    51  
+ confidently    48  
+     rapidly    47  
+  cautiously    46  
+   somewhere    45  
+simultaneously    44  
+  completely    43  
+  downstairs    42  
+horizontally    42  
+    overhead    42  
+        also    40  
+        well    40  
+      calmly    39  
+       close    38  
+      inward    37  
+   downwards    35  
+         far    34  
+     halfway    34  
+     happily    34  
+        hard    34  
+aggressively    33  
+      height    33  
+       fully    33  
+         all    33  
+    abruptly    31  
+     counter    31  
+  vertically    31  
+       front    28  
+       maybe    28  
+     swiftly    27  
+      before    27  
+    steadily    26  
+      fastly    26  
+       about    26  
+    somewhat    26  
+continuously    26  
+  vigorously    25  
+   awkwardly    23  
+    randomly    23  
+     angrily    23  
+  unsteadily    23  
+    possibly    21  
+      nearly    21  
+      really    21  
+       above    20  
+        next    19  
+     infront    19  
+   gradually    18  
+     further    18  
+       after    18  
+ immediately    17  
+     perhaps    17  
+    clumsily    17  
+occasionally    17  
+   laterally    17  
+     sharply    16  
+      deeply    16  
+        near    16  
+          on    16  
+   aimlessly    15  
+    gingerly    15  
+   leisurely    15  
+         too    15  
+  hesitantly    15  
+   seemingly    14  
+       quite    14  
+      likely    14  
+      faster    14  
+         now    13  
+         off    13  
+ erratically    13  
+        even    13  
+      softly    13  
+ momentarily    13  
+      closer    13  
+      lazily    13  
+  eventually    13  
+     shakily    13  
+dramatically    12  
+       versa    12  
+      mostly    12  
+      higher    12  
+       round    12  
+  gracefully    12  
+      across    12  
+      wildly    12  
+ tentatively    12  
+      though    12  
+ alternately    12  
+      fourth    11  
+       lower    11  
+   clockwise    11  
+ frantically    11  
+   excitedly    11  
+energetically    11  
+      widely    11  
+       later    11  
+  directally    10  
+  forcefully    10  
+  relatively    10  
+    smoothly    10  
+   nervously    10  
+        much    10  
+   naturally    10  
+    jauntily    10  
+      inside    10  
+ continually    10  
+     stiffly    10  
+      rather    9   
+alternatively    9   
+  afterwards    9   
+rhythmically    9   
+      foward    9   
+   sometimes    9   
+       below    9   
+  originally    9   
+        here    9   
+         low    9   
+       leaps    9   
+   drunkenly    9   
+   partially    9   
+         how    8   
+      lastly    8   
+       aside    8   
+ defensively    8   
+   violently    8   
+    joyfully    8   
+      freely    8   
+      fairly    8   
+    sneakily    8   
+          of    8   
+   initially    7   
+       alone    7   
+     through    7   
+    speedily    7   
+   anxiously    7   
+       along    7   
+    downhill    7   
+    sloppily    7   
+     heavily    7   
+      firmly    7   
+          by    6   
+enthusiastically    6   
+      simply    6   
+   hurriedly    6   
+       sadly    6   
+   extremely    6   
+   perfectly    6   
+deliberately    6   
+      barely    6   
+        vice    5   
+repetitively    5   
+ aggresively    5   
+      always    5   
+  carelessly    5   
+     sightly    5   
+        ever    5   
+     quietly    5   
+        real    5   
+        slow    5   
+        walk    5   
+   diagnolly    5   
+backandforth    5   
+   somehwere    5   
+        sort    5   
+  constantly    4   
+     outside    4   
+       never    4   
+          at    4   
+      limply    4   
+      partly    4   
+consistently    4   
+     shortly    4   
+  moderately    4   
+      little    4   
+   otherwise    4   
+     vaguely    4   
+    squiggly    4   
+   playfully    4   
+periodically    4   
+  sluggishly    4   
+        flat    4   
+      sexily    4   
+  stealthily    4   
+purposefully    4   
+ diagionally    4   
+ impatiently    4   
+    politely    4   
+    creepily    4   
+    foreward    3   
+      harder    3   
+ haphazardly    3   
+     rigidly    3   
+sporadically    3   
+   primarily    3   
+ reluctantly    3   
+         way    3   
+      mildly    3   
+     froward    3   
+     hastily    3   
+  cheerfully    3   
+    sometime    3   
+     instead    3   
+  apparently    3   
+  listlessly    3   
+   curiously    3   
+     broadly    3   
+hysterically    3   
+      hardly    3   
+      awhile    3   
+      onward    3   
+straightforward    3   
+    opposite    3   
+ comfortably    3   
+   diagnally    3   
+      wlowly    3   
+   elegantly    3   
+        deep    3   
+     jerkily    3   
+     angerly    3   
+       quick    3   
+alternatingly    3   
+    daintily    3   
+  delicately    3   
+          no    3   
+       thier    3   
+thoughtfully    2   
+  altogether    2   
+     largely    2   
+progressively    2   
+    unevenly    2   
+    narrowly    2   
+     slighly    2   
+         yet    2   
+   outwardly    2   
+      midway    2   
+      longer    2   
+  internally    2   
+  powerfully    2   
+  ultimately    2   
+    akwardly    2   
+  frequently    2   
+approximately    2   
+      nearby    2   
+    strongly    2   
+  motionless    2   
+      aorund    2   
+   shakingly    2   
+   viciously    2   
+methodically    2   
+mischievously    2   
+  menacingly    2   
+       camly    2   
+successfully    2   
+    actually    2   
+      uphill    2   
+      wiggly    2   
+subsequently    2   
+     greatly    2   
+     goofily    2   
+         ove    2   
+  eratically    2   
+      forard    2   
+     goodbye    2   
+     farther    2   
+   strangely    2   
+         ina    2   
+ drastically    2   
+  throughout    2   
+  graciously    2   
+suspiciously    2   
+       badly    2   
+lethargically    2   
+     roughly    2   
+   dodgeball    2   
+ accordingly    2   
+   painfully    2   
+uncontrollably    2   
+      evenly    2   
+   rightward    2   
+        half    2   
+        long    2   
+simultaniously    2   
+ chaotically    2   
+        toed    2   
+ diagnolally    2   
+sarcastically    2   
+frustratedly    2   
+      pretty    2   
+       often    2   
+        loud    2   
+     inwards    2   
+     tiredly    2   
+  diagnoally    2   
+     proudly    2   
+        past    2   
+ effectively    2   
+individually    2   
+effortlessly    2   
+     eagerly    2   
+protectively    2   
+   orginally    2   
+    urgently    2   
+      easily    2   
+      mainly    2   
+    carefuly    2   
+     cockily    2   
+     earlier    2   
+           a    2   
+   repetedly    2   
+  previously    2   
+     crazily    2   
+      safely    2   
+extraordinarily    1   
+    probably    1   
+ lathargecly    1   
+ robotically    1   
+  infinitely    1   
+        home    1   
+      loudly    1   
+    noteably    1   
+      wobbly    1   
+intentionally    1   
+  lifelessly    1   
+  eloquently    1   
+  stunningly    1   
+    promptly    1   
+      finely    1   
+        thru    1   
+tremendously    1   
+   slitghtly    1   
+      enough    1   
+  accurately    1   
+         ago    1   
+     acutely    1   
+rotationally    1   
+disapprovingly    1   
+  horizontal    1   
+       newly    1   
+    likewise    1   
+    impishly    1   
+         wat    1   
+  underneath    1   
+   sinuously    1   
+ slowlynalso    1   
+    silently    1   
+   pensively    1   
+ temporarily    1   
+          hi    1   
+   southeast    1   
+  rhymically    1   
+       aroud    1   
+      toward    1   
+ hesistantly    1   
+     blindly    1   
+   comically    1   
+  thoroughly    1   
+    parallel    1   
+     dorbell    1   
+   frontward    1   
+        open    1   
+uncomfortably    1   
+     however    1   
+      akimbo    1   
+aproximately    1   
+  thennearly    1   
+    unstably    1   
+     closely    1   
+     sligtly    1   
+     dizzily    1   
+      slower    1   
+ receptively    1   
+      second    1   
+    stelphly    1   
+pacinganxiously    1   
+      unsure    1   
+   afterward    1   
+unenthusiastically    1   
+  dominantly    1   
+    angerily    1   
+     auickly    1   
+      better    1   
+   crookedly    1   
+      angrly    1   
+confindently    1   
+  numerously    1   
+   alternate    1   
+        ther    1   
+       aback    1   
+   minimally    1   
+      nearer    1   
+       stepz    1   
+  definitely    1   
+        idly    1   
+intermediatly    1   
+  externally    1   
+ irregularly    1   
+descriptively    1   
+     exactly    1   
+ assertively    1   
+          pr    1   
+    slouched    1   
+    sligjtly    1   
+     swayong    1   
+   typically    1   
+simultanously    1   
+ continously    1   
+     merrily    1   
+ deliberatly    1   
+      beside    1   
+   panically    1   
+hesitatively    1   
+  statically    1   
+   purposely    1   
+passionately    1   
+     readily    1   
+    properly    1   
+   everytime    1   
+    formally    1   
+conspiratorially    1   
+ confusingly    1   
+indifferently    1   
+          ot    1   
+     holdind    1   
+     quicker    1   
+  stridently    1   
+  underwater    1   
+   causually    1   
+concurrently    1   
+embarrassingly    1   
+    severely    1   
+      course    1   
+ocassionally    1   
+    actively    1   
+lackadaisically    1   
+    unsurely    1   
+   buoyantly    1   
+     andback    1   
+  sidetoside    1   
+      arounf    1   
+    intently    1   
+    minutely    1   
+   moderatly    1   
+   worriedly    1   
+  nonchalant    1   
+      littly    1   
+  contritely    1   
+   sincerely    1   
+unsuccessfully    1   
+     totally    1   
+       clasp    1   
+          to    1   
+       south    1   
+  lengthwise    1   
+ irratically    1   
+        best    1   
+  sluggeshly    1   
+ exhaustedly    1   
+  boastfully    1   
+        like    1   
+        ward    1   
+      slkwly    1   
+     fidgety    1   
+   drunkedly    1   
+   variously    1   
+        eith    1   
+  flippantly    1   
+       waver    1   
+     slighty    1   
+   averagely    1   
+      whilst    1   
+        some    1   
+expeditiously    1   
+         hen    1   
+       tight    1   
+increasingly    1   
+      louder    1   
+      subtly    1   
+   regularly    1   
+  tauntingly    1   
+majestically    1   
+   patiently    1   
+  agitatedly    1   
+      nicely    1   
+commandingly    1   
+flauntlessly    1   
+ beauitfully    1   
+ expectantly    1   
+   generally    1   
+     usually    1   
+frighteningly    1   
+        most    1   
+  accidently    1   
+     harshly    1   
+      stilly    1   
+      boldly    1   
+   centrally    1   
+     clearly    1   
+ delightedly    1   
+counterclockwise    1   
+    jazzilly    1   
+  frontwards    1   
+        kind    1   
+  vigourusly    1   
+   similarly    1   
+    decently    1   
+  invertably    1   
+ searchingly    1   
+       under    1   
+     poisely    1   
+       loose    1   
+      hazily    1   
+      slawly    1   
+      sudden    1   
+       super    1   
+       oddly    1   
+  physically    1   
+       avout    1   
+      loosly    1   
+   catiously    1   
+  repetedtly    1   
+       shyly    1   
+        head    1   
+  alternatly    1   
+nonchalantly    1   
+      forwrd    1   
+spontaneously    1   
+meticulously    1   
+     towards    1   
+successively    1   
+       aloft    1   
+  tenatively    1   
+        soon    1   
+          uo    1   
+       every    1   
+   drunkinly    1   
+  immediatly    1   
+respectively    1   
+charismatically    1   
+     tensely    1   
+   contantly    1   
+     fprward    1   
+     firstly    1   
+      quckly    1   
+  worryingly    1   
+    diagonly    1   
+      dopily    1   
+    backhand    1   
+inquisitively    1   
+legitimately    1   
+ intensively    1   
+     forawrd    1   
+       third    1   
+   correctly    1   
+  personally    1   
+   haggardly    1   
+ horozonally    1   
+       prior    1   
+frenetically    1   
+respectfully    1   
+momentarilly    1   
+  separately    1   
+triumphantly    1   
+ comedically    1   
+   sliightly    1   
+ secretively    1   
+     jazzily    1   
+simultainiously    1   
+     weirdly    1   
+     chantly    1   
+simultanitously    1   
+frustratingly    1   
+   saliently    1   
+acrobatically    1   
+      highly    1   
+      openly    1   
+    joyously    1   
+ seductively    1   

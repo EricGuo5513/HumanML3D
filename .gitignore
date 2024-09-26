@@ -1,0 +1,9 @@
+pose_data/*
+HumanML3D/new_joints
+HumanML3D/new_joint_vecs
+*__pycache__
+body_models/*
+t2m*
+HumanML3D/texts/*
+amass_data
+joints
