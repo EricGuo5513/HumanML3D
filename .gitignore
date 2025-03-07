@@ -1,0 +1,29 @@
+# vim swaps
+.*.sw?
+
+# python binaries
+*.py[oc]
+
+# numpy arrays
+*.np[yz]
+
+# HumanML3D texts, when unzipped
+HumanML3D/texts/*.txt
+
+# Custom texts, once processed
+Custom/texts
+
+# amass or body model data, when unzipped
+amass_data/
+body_models/
+
+# zip files
+*.zip
+*.bz2
+*.tar
+*.gz
+*.tar.gz
+*.tgz
+
+# animations
+*.mp4

@@ -1,0 +1,32 @@
+#! /usr/bin/env bash
+
+FILE="$1"
+
+joint_names=()
+
+# add root
+joint_names=("${joint_names[@]}" "\"$(grep ROOT ${FILE} | sed 's/ROOT //;s/\t//g')\",")
+
+# add all joints in order
+for joint in $(grep JOINT ${FILE} | sed 's/JOINT //;s/\t//g'); do
+    joint_names+=( "\"${joint}\"," );       # FIXME: hacky method to include quotes and comma
+done
+
+# remove comma from last joint
+last_joint=${joint_names[-1]}
+joint_names[-1]=${last_joint%,*}
+
+# convenience computations
+num_joints=${#joint_names[@]}
+num_params=$(( ${num_joints} * 12 - 1 ))
+
+# write outputs to file
+echo "From ${FILE}:"
+echo "Joints = ${num_joints}"
+echo "Params = ${num_params} (12 * Joints - 1)"
+
+echo
+echo "Use the following as RIG_JOINT_NAMES:"
+echo "RIG_JOINT_NAMES = ["
+for joint in "${joint_names[@]}"; do echo ${joint}; done
+echo "]"
