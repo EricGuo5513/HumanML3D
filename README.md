@@ -70,15 +70,17 @@ Download SMPL+H mode from [SMPL+H](https://mano.is.tue.mpg.de/download.php) (cho
 
 ### Extract and Process Data
 
-You need to run the following scripts in order to obtain HumanML3D dataset:
+To generate the HumanML3D dataset, run these scripts in sequence:
 
-1. raw_pose_processing.ipynb
-2. motion_representation.ipynb
-3. cal_mean_variance.ipynb
+1. `raw_pose_processing.ipynb` - Standardizes raw poses from `./joints/` (scale, orientation, floor placement) and converts them into motion features for `./HumanML3D/new_joint_vecs/` and rebuilt joint positions for `./HumanML3D/new_joints/` using a skeleton model.
+2. `motion_representation.ipynb` - Adjusts raw joint data from `./joints/` (alignment, scaling) and creates motion features for `./HumanML3D/new_joint_vecs/` and 3D joint positions for `./HumanML3D/new_joints/` with kinematic transformations.
+3. `cal_mean_variance.ipynb` - Analyzes motion features from `./HumanML3D/new_joint_vecs/` (averages, spreads) and saves tuned mean and standard deviation as `Mean.npy` and `Std.npy` in `./HumanML3D/` for data preparation.
 
 This could be optional. Run it if you need animations. 
 
-4. animation.ipynb
+4. animation.ipynb - Visualizes 3D human motion data by creating an animated video from joint positions, plotting skeletal chains and a trajectory on a 3D grid. It saves the animation as a file (e.g., `.mp4`) using Matplotlib’s 3D plotting and animation tools.
+
+
 
 Please remember to go through the double-check steps. These aim to check if you are on the right track of obtaining HumanML3D dataset.
 
