@@ -1,0 +1,11 @@
+__pycache__
+.ipynb_checkpoints
+Mean.npy
+Std.npy
+amass_data
+animations
+body_models
+joints
+new_joints
+new_joint_vecs
+pose_data

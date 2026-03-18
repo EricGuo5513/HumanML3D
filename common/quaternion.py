@@ -10,7 +10,7 @@ import numpy as np
 
 _EPS4 = np.finfo(float).eps * 4.0
 
-_FLOAT_EPS = np.finfo(np.float).eps
+_FLOAT_EPS = np.finfo(float).eps
 
 # PyTorch-backed implementations
 def qinv(q):
